@@ -1,0 +1,21 @@
+#!/bin/sh
+# build.cfg
+
+# Build configuration info
+
+# number of CPUS aka threads; may hard-code
+CPUS=$(/usr/bin/nproc)
+
+# kernel source code
+# usually something cloned from of these:
+#  https://github.com/raspberrypi/linux.git
+#  git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+KSRC=$HOME/Projects/kernel-rpi-src
+
+# Debian Architecture info
+ARCH=arm64
+
+# toolchain info
+TCROOT=/opt/linaro/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu
+TCPFX=aarch64-linux-gnu-
+
