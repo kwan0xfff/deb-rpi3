@@ -14,6 +14,7 @@ The top-level directory structure is:
 * `docs` subdir - project documentation
 * `kernel` subdir - Linux kernel configuration
 * `rootfs` subdir - root filesystem configuration
+* `build` subdir - build temporary work and final products
 
 The current distributed binary is a zip file of the boot and rootfs
 partitions, suitable for unzip onto a microSD card, and easy boot-up.

@@ -38,6 +38,11 @@ case "$1" in
   ksrc)
     scripts/build-kernel.sh ksrc $KSRC
     ;;
+  kcfg)
+    scripts/build-kernel.sh kcfg \
+        -a $ARCH -t $TCROOT -p $TCPFX -c ${PWD}/kernel/config \
+        $KSRC $BLDDIR/kernel
+    ;;
   bldkrnl)
     scripts/build-kernel.sh bldkrnl \
         -a $ARCH -t $TCROOT -p $TCPFX -c ${PWD}/kernel/config -j$NCPUS \
@@ -48,12 +53,13 @@ case "$1" in
   image)        notimpl ;;
   *)  # default case; unrecognized option
     cat << EndOfFile
-syntax: build.sh [mkdirs|tools|ksrc|kernel|boot|rootfs|image]
+syntax: build.sh [mkdirs|tools|ksrc|kcfg|kernel|boot|rootfs|image]
 options:
     mkdirs              make skeletal build directory tree
     tools               show toolchain
     ksrc                show kernel source elements
-    bldkrnl             build kernel 
+    kcfg                configure kernel
+    bldkrnl             build kernel
     boot                build boot directory
     rootfs              build rootfs directory
     image               build dual-partition image
