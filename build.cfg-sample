@@ -4,7 +4,7 @@
 # Build configuration info
 
 # number of CPUS aka threads; may hard-code
-CPUS=$(/usr/bin/nproc)
+NCPUS=$(/usr/bin/nproc)
 
 # kernel source code
 # usually something cloned from of these:

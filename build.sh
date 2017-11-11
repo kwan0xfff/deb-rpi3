@@ -40,7 +40,7 @@ case "$1" in
     ;;
   bldkrnl)
     scripts/build-kernel.sh bldkrnl \
-        -a $ARCH -t $TCROOT -p $TCPFX -c ${PWD}/kernel/config \
+        -a $ARCH -t $TCROOT -p $TCPFX -c ${PWD}/kernel/config -j$NCPUS \
         $KSRC $BLDDIR/kernel
     ;;
   boot)         notimpl ;;
