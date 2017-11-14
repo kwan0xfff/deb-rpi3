@@ -20,8 +20,8 @@ PKGINCL=build-essential,gcc-6,gdb,e17,wicd
 do_rootfs() {
     # Do debootstrap as root
     (   cd ${RTRG}
-        echo debootstrap --arch=${ARCH} \
-            --include=${PKGINCL} --foreign ${RTFS_RELEASE} \
+        debootstrap --arch=${ARCH} \
+            --include=${PKGINCL} --foreign ${RELEASE} \
             $(pwd) ${REPO}
     )
 }
