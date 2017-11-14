@@ -49,7 +49,9 @@ case "$1" in
         $KSRC $BLDDIR/kernel
     ;;
   boot)         notimpl ;;
-  rootfs)       notimpl ;;
+  rootfs)
+    scripts/build-rootfs.sh rootfs $BLDDIR/rootfs
+    ;;
   image)        notimpl ;;
   *)  # default case; unrecognized option
     cat << EndOfFile
