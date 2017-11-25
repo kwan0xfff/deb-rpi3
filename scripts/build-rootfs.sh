@@ -11,7 +11,7 @@ ARCH=${ARCH=arm64}
 REPO=http://ftp.us.debian.org/debian
 
 # packages
-PKGINCL=build-essential,gcc-6,gdb,e17,wicd
+PKGINCL=build-essential,gcc-6,gdb,e17,wicd,iceweasel
 
 # CROSSPATH=/opt/linaro/gcc-linaro-aarch64
 # PATH=${CROSSPATH}/bin:${PATH}
