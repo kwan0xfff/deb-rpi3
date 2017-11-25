@@ -52,7 +52,10 @@ case "$1" in
   rootfs)
     scripts/build-rootfs.sh rootfs $BLDDIR/rootfs
     ;;
-  image)        notimpl ;;
+  image)
+    scripts/build-image.sh image $BLDDIR/image.img
+    ;;
+
   *)  # default case; unrecognized option
     cat << EndOfFile
 syntax: build.sh [mkdirs|tools|ksrc|kcfg|kernel|boot|rootfs|image]
