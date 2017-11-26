@@ -17,13 +17,16 @@ notimpl() {
 }
 
 make_blddirs() {
-    if [ ! -d "${BLDDIR}" ]; then
-        mkdir ${BLDDIR}
-        mkdir ${BLDDIR}/kernel
-        mkdir ${BLDDIR}/rootfs
-    else
-        echo Build directory ${BLDDIR} is in place.
-    fi  
+    for ddd in ${BLDDIR} \
+      ${BLDDIR}/kernel ${BLDDIR}/pifirm ${BLDDIR}/rootfs ${BLDDIR}/boot; \
+    do
+        if [ ! -d "${ddd}" ]; then
+            echo making ${ddd}
+            mkdir ${ddd}
+        else
+            echo found ${ddd}
+        fi
+    done
 }
 
 
