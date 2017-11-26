@@ -116,13 +116,14 @@ case ${subcmd} in
     ;;
   kcfg)
     KSRC=$1 ; shift
+    KTRG=$1 ; shift
+    do_copyconfig
     do_kcfg
     ;;
   bldkrnl)
     set -x
     KSRC=$1 ; shift
     KTRG=$1 ; shift
-    do_copyconfig
     do_bldkrnl
     do_copymodules
     ;;
