@@ -52,6 +52,19 @@ case "$1" in
         $KSRC $BLDDIR/kernel
     ;;
   boot)         notimpl ;;
+  pifw)
+    shift
+    if [ $1 = "-n" ]; then
+        OP=$1
+        shift
+    fi
+    case "$1" in
+      fetch) SUBCMD=fetch ;;
+      tarcreate) SUBCMD=tarcreate ;;
+      *) echo subcommands: fetch, tarcreate; exit 1 ;;
+    esac
+    scripts/build-pifw.sh $OP $SUBCMD $BLDDIR/pifw
+    ;;
   rootfs)
     scripts/build-rootfs.sh rootfs $BLDDIR/rootfs
     ;;
@@ -68,6 +81,7 @@ options:
     ksrc                show kernel source elements
     kcfg                configure kernel
     bldkrnl             build kernel
+    pifw                get RaspPi boot partition firmware
     boot                build boot directory
     rootfs              build rootfs directory
     image               build dual-partition image
