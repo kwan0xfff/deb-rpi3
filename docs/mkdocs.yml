@@ -1,0 +1,5 @@
+site_name: Debian arm64 on Pi3
+pages:
+    - Home: index.md
+    - Overview: overview.md
+    - About: about.md
