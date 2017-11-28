@@ -2,3 +2,6 @@
 
 # build directory
 build/
+
+# documents build directory
+docs/site
