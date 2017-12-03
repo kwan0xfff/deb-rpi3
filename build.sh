@@ -68,7 +68,17 @@ case "$1" in
     scripts/build-rootfs.sh rootfs $BLDDIR/rootfs
     ;;
   image)
-    scripts/build-image.sh image $BLDDIR/image.img
+    shift
+    if [ "$1" = "-n" ]; then
+        OP=$1
+        shift
+    fi
+    case "$1" in
+      imgskel|partfmts) SUBCMD=$1 ;;
+      mkboot) SUBCMD=$1 ;;
+      *) echo subcommands: imgskel, partfmts; exit 1 ;;
+    esac
+    scripts/build-image.sh $OP $SUBCMD $BLDDIR/image.img
     ;;
 
   *)  # default case; unrecognized option
