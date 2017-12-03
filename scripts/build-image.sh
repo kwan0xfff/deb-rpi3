@@ -3,15 +3,17 @@
 
 # Construct media image for Raspberry Pi 3
 
+# sizes, offsets in MB (1,048,576 bytes)
+PSTART=1        # partitions start in MBR map
 IMGSZ=4096      # total image filesize
-BOOTSZ=256      # boot partition size
+BOOTSZ=255      # boot partition size
 
 do_imgskel() {
     # create empty image
     dd if=/dev/zero of=${IMGF} bs=1M count=${IMGSZ} \
         status=progress
 
-    part1end=$(expr 2048 \* ${BOOTSZ} - 1)
+    part1end=$(expr 2048 \* \( ${BOOTSZ} + ${PSTART} \) - 1 )
     part2end=$(expr 2048 \* ${IMGSZ} - 1)
     #echo part1end $part1end
     #echo part2end $part2end
@@ -21,8 +23,10 @@ do_imgskel() {
 
     full="o\n${part1}${part2}${types}\nw\nq"
     echo $full | fdisk ${IMGF}
+    (   D=$(dirname ${IMGF}); B=$(basename ${IMGF});
+        cd ${D}; fdisk ${B} -l
+    )
 }
-
 
 # want enhanced getopt
 getopt --test > /dev/null 
