@@ -8,6 +8,10 @@ PSTART=1        # partitions start in MBR map
 IMGSZ=4096      # total image filesize
 BOOTSZ=255      # boot partition size
 
+notimpl() {
+    echo not yet implemented.
+}
+
 do_imgskel() {
     # create empty image
     dd if=/dev/zero of=${IMGF} bs=1M count=${IMGSZ} \
@@ -28,6 +32,38 @@ do_imgskel() {
     )
 }
 
+do_loopsetup() {
+    part1st=${PSTART}
+    part2st=$(expr ${BOOTSZ} + ${PSTART} )
+    part1sz=${BOOTSZ}
+    part2sz=$(expr ${IMGSZ} - ${BOOTSZ} - 1 )
+    #echo part1st $part1st
+    #echo part2st $part2st
+    #echo part1sz $part1sz
+    #echo part2sz $part2sz
+
+    losetup -o ${part1st}M --sizelimit ${part1sz}M /dev/loop1 ${IMGF}
+    losetup -o ${part2st}M --sizelimit ${part2sz}M /dev/loop2 ${IMGF}
+}
+
+do_loopteardown() {
+    losetup -d /dev/loop2
+    losetup -d /dev/loop1
+}
+
+do_partfmts() {
+    mkfs.vfat -F32 -n boot /dev/loop1
+    mkfs.ext4 -L rootfs /dev/loop2
+}
+
+do_mkboot() {
+    MOUNTPT=${BLDDIR}/mnt
+    [ -d ${MOUNTPT} ] || ${MOUNTPT}
+    mount /dev/loop1 ${MOUNTPT}
+    # do boot partition build here
+    umount ${MOUNTPT}
+}
+
 # want enhanced getopt
 getopt --test > /dev/null 
 if [ $? -ne 4 ] ; then
@@ -36,7 +72,7 @@ if [ $? -ne 4 ] ; then
 fi
 
 OPTIONS=v
-LONGOPTIONS=imgsz:,rootsz:,verbose
+LONGOPTIONS=imgsz:,rootsz:,blddir:,verbose
 
 
 PARSED=$(getopt -o $OPTIONS -l $LONGOPTIONS --name "$0" -- "$@")
@@ -45,8 +81,9 @@ eval set -- "${PARSED}"
 
 while true; do
     case "$1" in
-        --imgsz) IMGSZ=$2 ; shift ;;
-        --bootsz) BOOTSZ=$2 ; shift ;;
+        --imgsz) IMGSZ=$2 ; shift 2 ;;
+        --bootsz) BOOTSZ=$2 ; shift 2 ;;
+        --blddir) BLDDIR=$2 ; shift 2 ;;
         -v|--verbose) VERBOSE=true ; shift ;;
         --) shift ; break ;;
         *) echo "Internal error\!"; exit 1 ;;
@@ -64,9 +101,24 @@ echo subcommand: ${subcmd}
 echo remaining:  $*
 
 case ${subcmd} in
-  image)
+  imgskel)
     IMGF=$1 ; shift     # image file
     do_imgskel
+    ;;
+  partfmts)
+    IMGF=$1 ; shift     # image file
+    do_loopsetup
+    do_partfmts
+    do_loopteardown
+    ;;
+  mkboot)
+    notimpl
+    #do_loopsetup
+    #do_mkboot
+    #do_loopteardown
+    ;;
+  mkrootfs)
+    notimpl
     ;;
   *)
     echo "Unknown subcommand:" ${subcmd}
