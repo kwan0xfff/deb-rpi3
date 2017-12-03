@@ -54,13 +54,12 @@ case "$1" in
   boot)         notimpl ;;
   pifw)
     shift
-    if [ $1 = "-n" ]; then
+    if [ "$1" = "-n" ]; then
         OP=$1
         shift
     fi
     case "$1" in
-      fetch) SUBCMD=fetch ;;
-      tarcreate) SUBCMD=tarcreate ;;
+      fetch|tarcreate) SUBCMD=$1 ;;
       *) echo subcommands: fetch, tarcreate; exit 1 ;;
     esac
     scripts/build-pifw.sh $OP $SUBCMD $BLDDIR/pifw
