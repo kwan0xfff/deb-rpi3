@@ -2,4 +2,6 @@ site_name: Debian arm64 on Pi3
 pages:
     - Home: index.md
     - Overview: overview.md
+    - Build Process: buildproc.md
+    - Test Framework: testframe.md
     - About: about.md

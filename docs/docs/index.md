@@ -15,4 +15,6 @@ For full documentation visit [mkdocs.org](http://mkdocs.org).
     docs/
         index.md        # Documentation homepage
         overview.md     # Project overview
+        buildproc.md    # Build process
+        testframe.md    # Test framework
         about.md        # About this project
